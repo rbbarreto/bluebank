@@ -1,8 +1,11 @@
 package com.gama.projeto.bluebank.service;
 
+import com.gama.projeto.bluebank.factories.BankAccountFactory;
 import com.gama.projeto.bluebank.factories.UserFactory;
 import com.gama.projeto.bluebank.forms.UserForm;
+import com.gama.projeto.bluebank.model.BankAccount;
 import com.gama.projeto.bluebank.model.User;
+import com.gama.projeto.bluebank.model.dto.BankAccountDTO;
 import com.gama.projeto.bluebank.model.dto.UserDTO;
 import com.gama.projeto.bluebank.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +21,9 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private BankAccountService bankAccountService;
 
     // Trazer todos os usuários
     public Page<UserDTO> findAll(Pageable pageable){
@@ -47,9 +53,12 @@ public class UserService {
 
         if(result.isPresent()) throw new RuntimeException("Usuário já cadastrado! " + form.name);
 
-        User user = UserFactory.Create(form);
+        BankAccountDTO bankAccountDTO = bankAccountService.add(form.account);
 
+        User user = UserFactory.Create(form);
+        user.setAccount(BankAccountFactory.Create(bankAccountDTO));
         userRepository.save(user);
+
 
         return UserFactory.Create(user);
 

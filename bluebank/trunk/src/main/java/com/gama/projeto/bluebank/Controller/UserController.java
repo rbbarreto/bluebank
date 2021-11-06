@@ -23,12 +23,16 @@ import java.util.List;
 import static org.springframework.http.ResponseEntity.ok;
 
 @RestController
-@RequestMapping("/v1/api/user")
+@RequestMapping("/api/v1/user")
 @RequiredArgsConstructor
 public class UserController {
 
-    @Autowired
     private UserService userService;
+
+    @Autowired
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     @GetMapping
     @Cacheable(value = "bb.user")
@@ -46,7 +50,7 @@ public class UserController {
                                               UriComponentsBuilder uriBuilder){
        UserDTO dto =  userService.add(userForm);
 
-        URI uri = uriBuilder.path("/v1/api/user/{id}").buildAndExpand(dto.getId()).toUri();
+        URI uri = uriBuilder.path("{id}").buildAndExpand(dto.getId()).toUri();
         return ResponseEntity.created(uri).body(dto);
      }
 }

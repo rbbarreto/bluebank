@@ -20,6 +20,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.util.Set;
+import java.util.UUID;
 
 @Entity
 @Table(name = "account")
@@ -47,6 +48,20 @@ public class BankAccount {
     private HolderType holderType;
 
     private double amount = 0;
+
+    public BankAccount( Integer number, Integer agency, AccountType type, HolderType holderType, double amount, Set<Transaction> transactions) {
+        this.number = number;
+        this.agency = agency;
+        this.type = type;
+        this.holderType = holderType;
+        this.amount = amount;
+        this.transactions = transactions;
+    }
+
+    public void transfere(BankAccount destino, double valor){
+        this.amount = this.amount - valor;
+        destino.amount = destino.amount + valor;
+    }
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Transaction> transactions;

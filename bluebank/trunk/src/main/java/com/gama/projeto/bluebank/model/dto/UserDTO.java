@@ -55,13 +55,14 @@ public class UserDTO implements Serializable {
         return UserDTO
                 .builder()
                 .id(entity.getId())
-                .specificID(UUID.randomUUID().toString())
+                .specificID(entity.getSpecificID())
                 .name(entity.getName())
                 .age(entity.getAge())
                 .phone(entity.getPhone())
                 .email(entity.getEmail())
                 .account(entity.getAccount())
                 .build();
+        //.specificID(UUID.randomUUID().toString())
     }
 
     public static List<UserDTO> fromAll(List<User> user) {

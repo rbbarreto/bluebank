@@ -11,11 +11,10 @@ public class UserForm {
             @NotNull
             @NotEmpty
             @NotBlank
-            public String specificID;
             public String name;
             public int age;
             public String phone;
             public String email;
-            public BankAccount Account;
+            public BankAccountForm account;
 
 }

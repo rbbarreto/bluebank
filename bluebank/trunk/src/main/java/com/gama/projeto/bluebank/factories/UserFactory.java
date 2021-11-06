@@ -13,24 +13,25 @@ public class UserFactory {
 
     public static User Create(UserForm form){
         return new User(
-            form.specificID,
             form.name,
             form.age,
             form.phone,
             form.email,
-            form.Account);
+            form.account);
     }
 
     public static UserDTO Create(User user){
+
+        /*
         UserDTO dto = new UserDTO();
-         dto.setSpecificID(user.getSpecificID());
+        dto.setSpecificID(user.getSpecificID());
          dto.setName(user.getName());
          dto.setAge(user.getAge());
          dto.setPhone(user.getPhone());
          dto.setEmail(user.getEmail());
          dto.setAccount(user.getAccount());
-
-        return dto;
+        */
+        return UserDTO.from(user);
     }
 
 }
